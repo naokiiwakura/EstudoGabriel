@@ -30,7 +30,7 @@ namespace XUnitTestProjeto
 
         private List<Familia> MockListaLivro()
         {
-            var json = File.ReadAllText(@"../../../Mock/books.json", Encoding.GetEncoding("iso-8859-1"));
+            var json = File.ReadAllText(@"../../../Mock/familias.json", Encoding.GetEncoding("iso-8859-1"));
 
             var familias = JsonConvert.DeserializeObject<List<Familia>>(json);
 
