@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/book",
+      "launchUrl": "api/sorteio",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "ProjetoProjeto": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/book",
+      "launchUrl": "api/sorteio",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
