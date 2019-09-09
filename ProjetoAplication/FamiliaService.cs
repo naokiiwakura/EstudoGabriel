@@ -47,6 +47,10 @@ namespace ProjetoAplication
                 DataSorteio = DateTime.Now
             };
 
+            //Cadastrar no banco que a família foi contemplada
+            familiaSelecionada.Status = 2;
+            AlterarStatusFamilia(familiaSelecionada.Id, 2);
+
             return dtoRetorno;
         }
 
@@ -145,6 +149,12 @@ namespace ProjetoAplication
                 pontuacao += 2;
             }
             return pontuacao;
+        }
+
+        public bool AlterarStatusFamilia(int codFamilia, int codStatus)
+        {
+            //Não tenho banco para implementar 
+            return true;
         }
     }
 }
