@@ -28,16 +28,6 @@ namespace XUnitTestProjeto
             _familiaService = new FamiliaService(_familiaRepositoryMock.Object);
         }
 
-        private List<Familia> MockListaLivro()
-        {
-            var json = File.ReadAllText(@"../../../Mock/familias.json", Encoding.GetEncoding("iso-8859-1"));
-
-            var familias = JsonConvert.DeserializeObject<List<Familia>>(json);
-
-            return familias;
-        }
-
-
         [Theory]
         [InlineData(1,6)] //Pretendente abaixo de 30 anos e renda até 900
         [InlineData(2, 6)] //Pretendente acima de 45 anos e renda entre 901 e 1500
