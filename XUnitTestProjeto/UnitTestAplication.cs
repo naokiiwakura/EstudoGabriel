@@ -37,7 +37,7 @@ namespace XUnitTestProjeto
         [InlineData(6, 4)] //Pretendente abaixo de 30 anos e renda de 901 e dependente acima de 18
         [InlineData(7, 6)] //Pretendente abaixo de 30 anos e renda de 901 e um dependente abaixo de 18
         [InlineData(8, 7)] //Pretendente abaixo de 30 anos e renda de 901 e três dependentes abaixo de 18
-        public void CalcularPontuacaoPorRenda(int idFamlia, int pontuacao)
+        public void CalcularPontuacao(int idFamlia, int pontuacao)
         {
             //Arranjo
             var familia = RetornaFamiliasParaCalcularPontos().FirstOrDefault(p => p.Id == idFamlia);
