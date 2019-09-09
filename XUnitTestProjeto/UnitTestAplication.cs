@@ -59,6 +59,19 @@ namespace XUnitTestProjeto
             Assert.Equal(pontuacao, pontos);
         }
 
+        [Fact]
+        public void SortearFamilia()
+        {
+            //Arranjo
+            _familiaRepositoryMock.Setup(m => m.Query()).Returns(RetornaFamiliasParaCalcularPontos());
+
+            //Ação
+            var familia = _familiaService.SortearFamilia();
+
+            //Confirmação
+            Assert.Equal(3, familia.Id);
+        }
+
 
 
         #region MocksParaTeste
