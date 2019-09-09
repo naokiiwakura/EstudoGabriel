@@ -38,6 +38,46 @@ namespace XUnitTestProjeto
         }
 
 
+        [Theory]
+        [InlineData(1,6)] //Pretendente abaixo de 30 anos e renda até 900
+        [InlineData(2, 6)] //Pretendente acima de 45 anos e renda entre 901 e 1500
+        public void CalcularPontuacaoPorRenda(int idFamlia, int pontuacao)
+        {
+            //Arranjo
+            var familia = RetornaFamiliasParaCalcularPontosPorRenda().Where(p => p.Id == idFamlia).FirstOrDefault();
+
+            //Ação
+            var pontos = _familiaService.CalcularPontuacao(familia);
+
+            //Confirmação
+            Assert.Equal(pontuacao, pontos);
+        }
+
+
+
+        #region MocksParaTeste
+
+        public List<Familia> RetornaFamiliasParaCalcularPontosPorRenda()
+        {
+            var familias = new List<Familia>();
+
+            familias.Add(new Familia {
+                Id = 1,
+                Rendas = new List<Renda> { new Renda { Valor = 500}, new Renda { Valor = 400 } },
+                Pessoas = new List<Pessoa> { new Pessoa { DataDeNascimento = new DateTime(2002,01,01),Tipo ="Pretendente" } },
+            });
+
+            familias.Add(new Familia
+            {
+                Id = 2,
+                Rendas = new List<Renda> { new Renda { Valor = 900 }, new Renda { Valor = 10 } },
+                Pessoas = new List<Pessoa> { new Pessoa { DataDeNascimento = new DateTime(1968, 01, 01), Tipo = "Pretendente" } },
+            });
+
+            return familias;
+        }
+
+        #endregion
 
     }
 }
