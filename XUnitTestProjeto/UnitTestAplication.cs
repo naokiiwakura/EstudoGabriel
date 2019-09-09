@@ -46,7 +46,7 @@ namespace XUnitTestProjeto
             var pontos = _familiaService.CalcularPontuacaoTotal(familia);
 
             //Confirmação
-            Assert.Equal(pontuacao, pontos);
+            Assert.Equal(pontuacao, pontos.PontuacaoTotal);
         }
 
 
@@ -116,7 +116,7 @@ namespace XUnitTestProjeto
             var familia = _familiaService.SortearFamilia();
 
             //Confirmação
-            Assert.Equal(3, familia.Id);
+            Assert.Equal(3, familia.FamiliaId);
         }
         
 

@@ -23,7 +23,7 @@ namespace ProjetoAplication
         /// Realiza o sorteio da família baseado em sua pontuação
         /// </summary>
         /// <returns></returns>
-        public Familia SortearFamilia()
+        public SorteioDto SortearFamilia()
         {
             var familiasDisponiveis = _repo.Query().Where(p => p.Status == 0).ToList();
             Familia familiaSelecionada = null;
@@ -33,14 +33,21 @@ namespace ProjetoAplication
             {
                 var pontos = CalcularPontuacaoTotal(familia);
 
-                if(pontuacaoDaFamiliaSelecionada < pontos)
+                if(pontuacaoDaFamiliaSelecionada < pontos.PontuacaoTotal)
                 {
                     familiaSelecionada = familia;
-                    pontuacaoDaFamiliaSelecionada = pontos;
+                    pontuacaoDaFamiliaSelecionada = pontos.PontuacaoTotal;
                 }
             }
 
-            return familiaSelecionada;
+            var dtoRetorno = new SorteioDto
+            {
+                FamiliaId = familiaSelecionada.Id,
+                PontuacaoTotal = pontuacaoDaFamiliaSelecionada,
+                DataSorteio = DateTime.Now
+            };
+
+            return dtoRetorno;
         }
 
 
@@ -49,11 +56,33 @@ namespace ProjetoAplication
         /// </summary>
         /// <param name="familia"></param>
         /// <returns></returns>
-        public int CalcularPontuacaoTotal(Familia familia)
+        public SorteioDto CalcularPontuacaoTotal(Familia familia)
         {
-            return CalcularPontuacaoPorRenda(familia) + 
-                CalcularPontuacaoPorIdadePretendente(familia)+ 
-                CalcularPontuacaoPeloNumeroDeDependentes(familia);
+            var pontosRenda = CalcularPontuacaoPorRenda(familia);
+
+            var pontosIdadePretendente = CalcularPontuacaoPorIdadePretendente(familia);
+
+            var pontosNumeroDependentes = CalcularPontuacaoPeloNumeroDeDependentes(familia);
+
+            var criteriosAtendidos = 0;
+
+            criteriosAtendidos += pontosRenda > 0 ? 1 : 0;
+
+            criteriosAtendidos += pontosIdadePretendente > 0 ? 1 : 0;
+
+            criteriosAtendidos += pontosNumeroDependentes > 0 ? 1 : 0;
+
+            var pontosTotais = pontosRenda + pontosIdadePretendente + pontosNumeroDependentes;
+
+            var sorteioFamilia = new SorteioDto
+            {
+                FamiliaId = familia.Id,
+                QuantidadeDeCriterios = criteriosAtendidos,
+                DataSorteio = DateTime.Now,
+                PontuacaoTotal = pontosTotais
+            };
+
+            return sorteioFamilia;
         }
 
         public int CalcularPontuacaoPorRenda(Familia familia)
