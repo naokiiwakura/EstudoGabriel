@@ -6,7 +6,7 @@ namespace ProjetoDomain.Model
 {
     public class Renda
     {
-        public string pessoaId { get; set; }
-        public int valor { get; set; }
+        public string PessoaId { get; set; }
+        public int Valor { get; set; }
     }
 }

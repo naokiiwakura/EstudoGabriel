@@ -9,5 +9,6 @@ namespace ProjetoDomain.Aplication
     public interface IFamiliaService
     {
         Familia SortearFamilia();
+        int CalcularPontuacao(Familia familia);
     }
 }

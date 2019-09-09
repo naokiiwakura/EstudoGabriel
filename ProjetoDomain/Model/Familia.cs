@@ -6,9 +6,9 @@ namespace ProjetoDomain.Model
 {
     public class Familia
     {
-        public string id { get; set; }
-        public List<Pessoa> pessoas { get; set; }
-        public List<Renda> rendas { get; set; }
-        public string status { get; set; }
+        public string Id { get; set; }
+        public List<Pessoa> Pessoas { get; set; }
+        public List<Renda> Rendas { get; set; }
+        public int Status { get; set; }
     }
 }

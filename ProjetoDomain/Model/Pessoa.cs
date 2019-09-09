@@ -6,9 +6,9 @@ namespace ProjetoDomain.Model
 {
     public class Pessoa
     {
-        public string id { get; set; }
-        public string nome { get; set; }
-        public string tipo { get; set; }
-        public string dataDeNascimento { get; set; }
+        public string Id { get; set; }
+        public string Nome { get; set; }
+        public string Tipo { get; set; }
+        public DateTime DataDeNascimento { get; set; }
     }
 }
