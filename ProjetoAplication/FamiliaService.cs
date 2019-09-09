@@ -31,7 +31,7 @@ namespace ProjetoAplication
 
             foreach (var familia in familiasDisponiveis)
             {
-                var pontos = CalcularPontuacao(familia);
+                var pontos = CalcularPontuacaoTotal(familia);
 
                 if(pontuacaoDaFamiliaSelecionada < pontos)
                 {
@@ -49,11 +49,17 @@ namespace ProjetoAplication
         /// </summary>
         /// <param name="familia"></param>
         /// <returns></returns>
-        public int CalcularPontuacao(Familia familia)
+        public int CalcularPontuacaoTotal(Familia familia)
+        {
+            return CalcularPontuacaoPorRenda(familia) + 
+                CalcularPontuacaoPorIdadePretendente(familia)+ 
+                CalcularPontuacaoPeloNumeroDeDependentes(familia);
+        }
+
+        public int CalcularPontuacaoPorRenda(Familia familia)
         {
             var rendaFamiliar = familia.Rendas.Sum(p => p.Valor);
-            int pontuacao = 0;
-
+            var pontuacao = 0;
             //Pontuação po renda
             if (rendaFamiliar <= 900)
             {
@@ -68,9 +74,15 @@ namespace ProjetoAplication
                 pontuacao += 1;
             }
 
+            return pontuacao;
+        }
+
+        public int CalcularPontuacaoPorIdadePretendente(Familia familia)
+        {
 
             //pontuação pela idade do pretendente
             var pretendente = familia.Pessoas.FirstOrDefault(p => p.Tipo == "Pretendente");
+            var pontuacao = 0;
             if (pretendente != null)
             {
                 var idadePretendente = CalcularIdade.Age(pretendente.DataDeNascimento);
@@ -87,10 +99,14 @@ namespace ProjetoAplication
                     pontuacao += 1;
                 }
             }
+            return pontuacao;
+        }
 
-
+        public int CalcularPontuacaoPeloNumeroDeDependentes(Familia familia)
+        {
             //Pontuação pela quantidade de dependentes
             var quantidadeDependentes = familia.Pessoas.Where(p => p.Tipo == "Dependente" && CalcularIdade.Age(p.DataDeNascimento) < 18).Count();
+            var pontuacao = 0;
             if (quantidadeDependentes >= 3)
             {
                 pontuacao += 3;
@@ -99,7 +115,6 @@ namespace ProjetoAplication
             {
                 pontuacao += 2;
             }
-
             return pontuacao;
         }
     }

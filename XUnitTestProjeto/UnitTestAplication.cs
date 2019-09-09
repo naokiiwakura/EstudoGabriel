@@ -43,11 +43,68 @@ namespace XUnitTestProjeto
             var familia = RetornaFamiliasParaCalcularPontos().FirstOrDefault(p => p.Id == idFamlia);
 
             //Ação
-            var pontos = _familiaService.CalcularPontuacao(familia);
+            var pontos = _familiaService.CalcularPontuacaoTotal(familia);
 
             //Confirmação
             Assert.Equal(pontuacao, pontos);
         }
+
+
+        [Theory]
+        [InlineData(6, 0)] 
+        [InlineData(7, 2)] 
+        [InlineData(8, 3)] 
+        public void CalcularPontuacaoPeloNumeroDeDependentes(int idFamlia, int pontuacao)
+        {
+            //Arranjo
+            var familia = RetornaFamiliasParaCalcularPontos().FirstOrDefault(p => p.Id == idFamlia);
+
+            //Ação
+            var pontos = _familiaService.CalcularPontuacaoPeloNumeroDeDependentes(familia);
+
+            //Confirmação
+            Assert.Equal(pontuacao, pontos);
+        }
+
+
+        [Theory]
+        [InlineData(1, 5)] 
+        [InlineData(2, 3)] 
+        [InlineData(3, 5)] 
+        [InlineData(4, 0)] 
+        [InlineData(5, 1)] 
+        public void CalcularPontuacaoPelaRenda(int idFamlia, int pontuacao)
+        {
+            //Arranjo
+            var familia = RetornaFamiliasParaCalcularPontos().FirstOrDefault(p => p.Id == idFamlia);
+
+            //Ação
+            var pontos = _familiaService.CalcularPontuacaoPorRenda(familia);
+
+            //Confirmação
+            Assert.Equal(pontuacao, pontos);
+        }
+
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(2, 3)]
+        [InlineData(3, 3)]
+        [InlineData(4, 3)]
+        [InlineData(5, 1)]
+        public void CalcularPontuacaoPelaIdadePretendente(int idFamlia, int pontuacao)
+        {
+            //Arranjo
+            var familia = RetornaFamiliasParaCalcularPontos().FirstOrDefault(p => p.Id == idFamlia);
+
+            //Ação
+            var pontos = _familiaService.CalcularPontuacaoPorIdadePretendente(familia);
+
+            //Confirmação
+            Assert.Equal(pontuacao, pontos);
+        }
+
+
 
         [Fact]
         public void SortearFamilia()
@@ -61,8 +118,7 @@ namespace XUnitTestProjeto
             //Confirmação
             Assert.Equal(3, familia.Id);
         }
-
-
+        
 
         #region MocksParaTeste
 
