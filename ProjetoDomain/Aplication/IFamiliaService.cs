@@ -13,6 +13,6 @@ namespace ProjetoDomain.Aplication
         int CalcularPontuacaoPorRenda(Familia familia);
         int CalcularPontuacaoPorIdadePretendente(Familia familia);
         int CalcularPontuacaoPeloNumeroDeDependentes(Familia familia);
-        bool AlterarStatusFamilia(int codFamilia,int codStatus);
+        bool AlterarStatusFamilia(SorteioDto familia);
     }
 }

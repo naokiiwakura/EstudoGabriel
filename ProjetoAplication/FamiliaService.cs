@@ -26,32 +26,22 @@ namespace ProjetoAplication
         public SorteioDto SortearFamilia()
         {
             var familiasDisponiveis = _repo.Query().Where(p => p.Status == 0).ToList();
-            Familia familiaSelecionada = null;
-            int pontuacaoDaFamiliaSelecionada = 0;
+            SorteioDto familiaSelecionada = null ;
 
             foreach (var familia in familiasDisponiveis)
             {
                 var pontos = CalcularPontuacaoTotal(familia);
 
-                if(pontuacaoDaFamiliaSelecionada < pontos.PontuacaoTotal)
+                if(familiaSelecionada == null || familiaSelecionada.PontuacaoTotal < pontos.PontuacaoTotal)
                 {
-                    familiaSelecionada = familia;
-                    pontuacaoDaFamiliaSelecionada = pontos.PontuacaoTotal;
+                    familiaSelecionada = pontos;
                 }
             }
 
-            var dtoRetorno = new SorteioDto
-            {
-                FamiliaId = familiaSelecionada.Id,
-                PontuacaoTotal = pontuacaoDaFamiliaSelecionada,
-                DataSorteio = DateTime.Now
-            };
-
             //Cadastrar no banco que a família foi contemplada
-            familiaSelecionada.Status = 2;
-            AlterarStatusFamilia(familiaSelecionada.Id, 2);
+            AlterarStatusFamilia(familiaSelecionada);
 
-            return dtoRetorno;
+            return familiaSelecionada;
         }
 
 
@@ -70,11 +60,11 @@ namespace ProjetoAplication
 
             var criteriosAtendidos = 0;
 
-            criteriosAtendidos += pontosRenda > 0 ? 1 : 0;
+            criteriosAtendidos += (pontosRenda > 0 ? 1 : 0);
 
-            criteriosAtendidos += pontosIdadePretendente > 0 ? 1 : 0;
+            criteriosAtendidos += (pontosIdadePretendente > 0 ? 1 : 0);
 
-            criteriosAtendidos += pontosNumeroDependentes > 0 ? 1 : 0;
+            criteriosAtendidos += (pontosNumeroDependentes > 0 ? 1 : 0);
 
             var pontosTotais = pontosRenda + pontosIdadePretendente + pontosNumeroDependentes;
 
@@ -151,7 +141,7 @@ namespace ProjetoAplication
             return pontuacao;
         }
 
-        public bool AlterarStatusFamilia(int codFamilia, int codStatus)
+        public bool AlterarStatusFamilia(SorteioDto familia)
         {
             //Não tenho banco para implementar 
             return true;
